@@ -3,7 +3,7 @@
   
       <!-- Create button -->
        <div class = "d-flex justify-content-end mb-3">
-          <button class ="btn btn-primary" (click) = "createMitigations()">Create</button>
+          <button class ="btn btn-primary create-button" (click) = "createMitigations()">Create</button>
        </div>
   
       <!-- Mitigation table -->
@@ -32,7 +32,11 @@
                       />
                   </td>
                   <!-- ID (auto-incrementing) -->
-                  <td>#{{ i + 1}}</td>
+                  <td>
+                    <span [ngClass]="{ 'highlighted-text' : mitigation.editable }">
+                        #{{ i + 1}}
+                    </span>
+                  </td>
   
                   <!-- Description (Editable if checkbox is checked) -->
                   <td>
@@ -41,7 +45,7 @@
                           [(ngModel)]="mitigation.description"
                           [disabled]="!mitigation.editable"
                           placeholder="Enter the description"
-                          class="form-control"
+                          class="form-control description-field"
                       />
                   </td>
   
@@ -50,7 +54,7 @@
                       <select
                           [(ngModel)]="mitigation.pre_mitigation_score"
                           [disabled]="!mitigation.editable"
-                          class="form-control"
+                          class="form-control score-dropdown"
                           >
                           <option *ngFor="let score of scores" [value]="score">
                               {{ score }}
@@ -63,7 +67,7 @@
                       <select
                           [(ngModel)]="mitigation.post_mitigation_score"
                           [disabled]="!mitigation.editable"
-                          class="form-control"
+                          class="form-control score-dropdown"
                           >
                           <option *ngFor="let score of scores" [value]="score">
                               {{ score }}
@@ -72,7 +76,7 @@
                   </td>
   
                   <!-- Applied on (Auto-generated date) -->
-                   <td>{{ mitigation.applied_on}}</td>
+                   <td>{{ mitigation.applied_on || '-'}}</td>
               </tr>
           </tbody>
       </table>

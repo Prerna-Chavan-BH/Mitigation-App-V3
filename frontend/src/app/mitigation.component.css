@@ -1,0 +1,83 @@
+/* General container styling*/
+.container{
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0 0 0 0.1);
+}
+
+/* Table styling*/
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead{
+    background-color: #007bff;
+    color:#f8f9fa;
+}
+
+th, td{
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #dee2e6;
+}
+
+tbosy tr:nth-child(even){
+    background-color: #e9ecef;
+}
+
+/* Input and select styling*/
+input[type="text"], select {
+    width: 100%;
+    padding: 6px;
+    border: 1 px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* Input and select styling*/
+input[type="text"], select{
+    width: 100%;
+    padding: 6px;
+    border: 1 px solid #ced4da;
+    border-radius: 4px;
+}
+
+/*Border styling*/
+button{
+    padding: 10px 20px;
+    font-size: 16px;
+    color:#f8f9fa;
+    background-color: #007bff;
+    border: grey;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #0056b3;
+}
+
+/*Average mitigation score display*/
+.mt-4{
+    margin-top: 16px;
+}
+.text-primary{
+    color: #007bff;
+}
+
+.text-success{
+    color: #28a745;
+}
+
+.ml-3{
+    margin-left: 16px;
+}
+
+/*Disable checkbox and input while not editable*/
+input[disabled], select[disabled]{
+    background-color: #e9ecef;
+    cursor: not-allowed
+}
