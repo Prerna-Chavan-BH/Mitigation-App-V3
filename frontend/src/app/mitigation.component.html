@@ -1,0 +1,92 @@
+<div class = "container">
+    <h2>Mitigation Details</h2>
+  
+      <!-- Create button -->
+       <div class = "d-flex justify-content-end mb-3">
+          <button class ="btn btn-primary" (click) = "createMitigations()">Create</button>
+       </div>
+  
+      <!-- Mitigation table -->
+      <table class = "table table-bordered">
+          <thead>
+              <tr>
+                  <th scope="col">
+                      <input type="checkbox" disabled/>
+                  </th>
+  
+                  <th scope="col">#Mitigation</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Pre-Mitigation Score</th>
+                  <th scope="col">Post-Mitigation Score</th>
+                  <th scope="col">Applied On</th>
+                </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let mitigation of mitigations; let i = index">
+                  <!-- Checkbox -->
+                  <td>
+                      <input
+                          type="checkbox"
+                          (change)="toggleEdit(mitigation)"
+                          [checked]="mitigation.editable"
+                      />
+                  </td>
+                  <!-- ID (auto-incrementing) -->
+                  <td>#{{ i + 1}}</td>
+  
+                  <!-- Description (Editable if checkbox is checked) -->
+                  <td>
+                      <input
+                          type="text"
+                          [(ngModel)]="mitigation.description"
+                          [disabled]="!mitigation.editable"
+                          placeholder="Enter the description"
+                          class="form-control"
+                      />
+                  </td>
+  
+                  <!-- Pre-mitigation Score (Dropdown) -->
+                  <td>
+                      <select
+                          [(ngModel)]="mitigation.pre_mitigation_score"
+                          [disabled]="!mitigation.editable"
+                          class="form-control"
+                          >
+                          <option *ngFor="let score of scores" [value]="score">
+                              {{ score }}
+                          </option>
+                      </select>
+                  </td>
+  
+                  <!-- Post mitigation score(dropdown) -->
+                  <td>
+                      <select
+                          [(ngModel)]="mitigation.post_mitigation_score"
+                          [disabled]="!mitigation.editable"
+                          class="form-control"
+                          >
+                          <option *ngFor="let score of scores" [value]="score">
+                              {{ score }}
+                          </option>
+                      </select>
+                  </td>
+  
+                  <!-- Applied on (Auto-generated date) -->
+                   <td>{{ mitigation.applied_on}}</td>
+              </tr>
+          </tbody>
+      </table>
+  
+      <!-- Average mitigation score -->
+       <div class="mt-4">
+          <span>
+              <strong>Average Mitigation Score: </strong>
+          </span>
+          <span class="text-primary">
+              Avg. Pre-Mitigation Score: {{avgPreMitigationScore}}
+          </span>
+          <span class="text-success ml-3">
+              Avg. Post-Mitigation Score: {{avgPostMitigationScore}}
+          </span>
+       </div>
+  </div>

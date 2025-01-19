@@ -1,0 +1,35 @@
+{
+  "name": "mitigation-frontend",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:mitigation-frontend": "node dist/mitigation-frontend/server/server.mjs"
+  },
+  "dependencies": {
+    "@angular/animations": "^19.1.1",
+    "@angular/common": "^19.1.1",
+    "@angular/compiler": "^19.1.1",
+    "@angular/core": "^19.1.1",
+    "@angular/forms": "^19.1.1",
+    "@angular/platform-browser": "^19.1.1",
+    "@angular/platform-browser-dynamic": "^19.1.1",
+    "@angular/platform-server": "^19.1.1",
+    "@angular/router": "^19.1.1",
+    "@angular/ssr": "^19.1.2",
+    "express": "^4.21.2",
+    "rxjs": "^7.8.1",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.1.2",
+    "@angular/cli": "^19.1.2",
+    "@angular/compiler-cli": "^19.1.1",
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.3"
+  }
+}
