@@ -1,0 +1,25 @@
+<h2>Create New Mitigation</h2>
+<form [formGroup]="mitigationForm" (ngSubmit)="onSubmit()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Checkbox</mat-label>
+    <input matInput formControlName="checkbox" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <input matInput formControlName="description" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Pre-Mitigation Score</mat-label>
+    <input matInput formControlName="preMitigationScore" type="number" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Post-Mitigation Score</mat-label>
+    <input matInput formControlName="postMitigationScore" type="number" />
+  </mat-form-field>
+
+  <button mat-raised-button type="submit" [disabled] = "mitigationForm.invalid">Submit</button>
+</form>

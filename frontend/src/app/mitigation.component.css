@@ -1,11 +1,11 @@
 /* General container styling*/
 .container{
     max-width: 800px;
-    margin: 20px auto;
+    margin: 15px auto;
     padding: 20px;
     background-color: #f8f9fa;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0 0 0 0.1);
+    box-shadow: 6px 4px 8px rgba(0 0 0 0.1);
 }
 
 /* Table styling*/
@@ -15,14 +15,14 @@ table{
 }
 
 thead{
-    background-color: #007bff;
-    color:#f8f9fa;
+    background-color: #D3D3D3;
+    color: #454545;
 }
 
 th, td{
-    padding: 12px;
+    padding: 3px;
     text-align: center;
-    border: 1px solid #dee2e6;
+    border: 1px solid #dddddde0;
 }
 
 tbosy tr:nth-child(even){
@@ -31,45 +31,51 @@ tbosy tr:nth-child(even){
 
 /* Input and select styling*/
 input[type="text"], select {
-    width: 100%;
+    width: 80%;
     padding: 6px;
-    border: 1 px solid #ced4da;
+    border: 2px solid #ced4da;
     border-radius: 4px;
+}
+
+input[type='checkbox']{
+    transform: scale(1.5);
+    margin: 0 auto;
+    display: block;
 }
 
 /* Input and select styling*/
 input[type="text"], select{
-    width: 100%;
+    width: 80%;
     padding: 6px;
-    border: 1 px solid #ced4da;
+    border: 2px solid #ced4da;
     border-radius: 4px;
 }
 
 /*Border styling*/
 button{
-    padding: 10px 20px;
-    font-size: 16px;
-    color:#f8f9fa;
-    background-color: #007bff;
+    padding: 8px 10px;
+    font-size: 10px;
+    color:#454545;
+    background-color: #D3D3D3    ;
     border: grey;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
 }
 
 button:hover{
-    background-color: #0056b3;
+    background-color: rgb(88, 196, 164);
 }
 
 /*Average mitigation score display*/
 .mt-4{
-    margin-top: 16px;
+    margin-top: 18px;
 }
 .text-primary{
-    color: #007bff;
+    color: #D3D3D3;
 }
 
 .text-success{
-    color: #28a745;
+    color: #28a78e;
 }
 
 .ml-3{

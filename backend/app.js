@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/db');
 const mitigation_Routes = require('./routes/mitigationRoutes');
+const Mitigation = require('./models/mitigationModel')
 
 const app = express();
 const PORT = 3000;

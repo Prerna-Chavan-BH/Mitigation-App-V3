@@ -1,65 +1,56 @@
 import { Component } from '@angular/core';
-import { MitigationService } from './mitigation.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CreateMitigationDialogComponent } from './create-mitigation-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @Component({
-    selector: 'app-mitigation',
-    standalone: true,                  // indicates that this is a standalone component
-    imports: [CommonModule, FormsModule],  //This will fix the error i was getting in html file for *ngFor
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+  selector: 'app-mitigation',
+  standalone: true,
+  imports: [  MatCheckboxModule, MatTableModule, MatButtonModule, MatDialogModule],
+  templateUrl: './mitigation.component.html',
+  styleUrls: ['./mitigation.component.css']
 })
 
 export class MitigationComponent {
-    mitigations = [
-        {
-            description : '',
-            pre_mitigation_score: null,
-            post_mitigation_score: null,
-            applied_on: '',
-            editable: false
-        },
-    ];
+  mitigations = new MatTableDataSource<any>(); // Holds the mitigation data, Mattabledatasource will do the data binding for the html code
+  displayedColumns :string[] = ['id', 'description', 'preMitigationScore', 'postMitigationScore', 'appliedOn'];
 
-    scores = [1, 2, 3, 4, 5];
-    avgPreMitigationScore: number = 0;
-    avgPostMitigationScore: number = 0;
+  constructor(private dialog: MatDialog, private http: HttpClient) {
+    this.fetchMitigations();
+  }
 
-    //Enable/Disable row edits
-    toggleEdit(mitigation: any): void{
-        mitigation.editable = !mitigation.editable;
+  toggleAllSelection(event: any){
+    console.log('Select all checkbox: ', event);
+  }
 
-        if (mitigation.editable){
-            mitigation.applied_on = new Date().toLocaleDateString('en-IN',{
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            });
-        }
-    }
+  toggleSelection(row: any){
+    console.log('Row checkbox: ', row);
+  }
 
-    //Calculate averages
-    calculateAverages(): void{
-        const preScores = this.mitigations
-            .filter((m) => m.pre_mitigation_score !== null)
-            .map((m) => m.pre_mitigation_score!);           //non-null assertion operator used
-        const postScores = this.mitigations
-            .filter((m) => m.post_mitigation_score !== null)
-            .map((m) => m.post_mitigation_score!);         //non null assertion operator used
+  fetchMitigations() {
+    this.http.get('/api/mitigations').subscribe((data: any) => {
+      this.mitigations.data = data;
+    });
+  }
 
-        this.avgPreMitigationScore = 
-            preScores.length > 0 ?
-            preScores.reduce((a, b) => a + b, 0)/ preScores.length : 0;
-        this.avgPostMitigationScore = 
-            postScores.length > 0 ?
-            postScores.reduce((a, b) => a + b, 0)/ postScores.length : 0;
-    }
+  openCreateDialog() {
+    const dialogRef = this.dialog.open(CreateMitigationDialogComponent);
 
-    //Create mitigations
-    createMitigations(): void {
-        this.calculateAverages();
-        console.log('Mitigation: ', this.mitigations);
-    }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.http.post('/api/mitigations', result).subscribe((newMitigation: any) => {
+          this.mitigations.data = [...this.mitigations.data, newMitigation];     //updating the data source
+        });
+      }
+    });
+  }
+
+  deleteMitigation(id: number) {
+    this.http.delete(`/api/mitigations/${id}`).subscribe(() => {
+      this.mitigations.data = this.mitigations.data.filter((mitigation) => mitigation.id !== id);     //Remove deleted mitigation 
+    });
+  }
 }
-    
