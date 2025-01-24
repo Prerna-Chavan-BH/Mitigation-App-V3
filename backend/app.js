@@ -8,17 +8,22 @@ const Mitigation = require('./models/mitigationModel')
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:4200',
+    methods: 'GET, POST, PUT, DELETE',
+    allowedHeaders: 'Content-Type, Accept'
+}));
+
 app.use(bodyParser.json());
 
 //MitigationRoutes
-app.use('/api/mitigation', mitigation_Routes);
+app.use('/', mitigation_Routes);
 
 //Testing database connection
 sequelize
     .authenticate().then(() => {
         console.log('Database connected successfully!');
-        sequelize.sync();
+        sequelize.sync({force: true});
     })
     .catch((error) => console.error('Unable to connect with the database', error));
 

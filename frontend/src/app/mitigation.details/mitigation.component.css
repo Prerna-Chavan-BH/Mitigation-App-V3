@@ -1,0 +1,68 @@
+/* General container styling*/
+.container{
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 6px 4px 8px rgba(0 0 0 0.1);
+    width: 80%;
+    
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.create-btn{
+    background-color: #4CAf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: grey;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* Table styling*/
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td{
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+/* tbosy tr:nth-child(even){
+    background-color: #e9ecefe2;
+} */
+
+.create-mitigation-btn{
+    background-color: #4CAf50;
+    color: #fff;
+    padding: 10px, 20px;
+    border:#454545;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-mitigation-btn:hover{
+    background-color: #3e8341;
+}
+
+.delete.btn{
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

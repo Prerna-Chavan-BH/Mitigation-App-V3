@@ -3,11 +3,11 @@ const sequelize = require('../config/db');
 const Sequelize = require('sequelize');
 
 const Mitigation = sequelize.define('Mitigation',{
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
+    // id: {
+    //     type: DataTypes.INTEGER,
+    //     autoIncrement: true,
+    //     primaryKey: true,
+    // },
     mitigation: {
         type: DataTypes.INTEGER,
         autoIncrement: true,

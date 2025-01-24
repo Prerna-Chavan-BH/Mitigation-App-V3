@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 
 export class MitigationService{
-    private apiUrl = 'http://localhost:3000/api/mitigations';
+    public apiUrl = 'http://localhost:3000/api/mitigations';
 
-    constructor(private http: HttpClient) {}
+    constructor(public http: HttpClient) {}
 
     getMitigations(): Observable <any> {
         return this.http.get(this.apiUrl);

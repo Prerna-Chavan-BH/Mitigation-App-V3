@@ -1,0 +1,40 @@
+<div class="dialog-container">
+  <h2 class="center">Create Mitigation</h2>
+    <form [formGroup]="mitigationForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name= "description" ngModel required [(ngModel)]="newMitigation.description" style="width: 755px; height: 35px;"></textarea>
+      </div>
+
+    <br>
+
+    <div class="form-group">
+      <label>Pre-Mitigation Score</label>
+      <select name= "preMitigationScore" ngModel required  [(ngModel)]="newMitigation.preMitigationScore" [disabled]="!newMitigation.description">
+        <option *ngFor="let score of scores">{{ score }}</option>
+      </select>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+      <label>Post-Mitigation Score</label>
+      <select  name= "postMitigationScore" ngModel required [(ngModel)]="newMitigation.postMitigationScore" [disabled]="!newMitigation.preMitigationScore">
+        <option *ngFor="let score of scores">{{ score }}</option>
+      </select>
+    </div>
+
+    <br>
+
+    <div class="form-group">
+      <label>AppliedOn: </label>
+      <input type="datetime-local" name= "appliedOn" ngModel required [(ngModel)]="newMitigation.appliedOn" [disabled]="!newMitigation.postMitigationScore">
+    </div>
+    <br>
+    <button type="submit">Submit</button>
+
+    <div *ngIf="error">
+      {{error}}
+    </div>
+  </form>
+</div>

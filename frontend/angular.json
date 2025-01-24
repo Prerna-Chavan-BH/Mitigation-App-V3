@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-      "mitigation-frontend": {
+      "Mitigation-App-V3": {
         "projectType": "application",
         "schematics": {},
         "root": "",
@@ -13,7 +13,7 @@
           "build": {
             "builder": "@angular-devkit/build-angular:application",
             "options": {
-              "outputPath": "dist/mitigation-frontend",
+              "outputPath": "dist/Mitigation-App-V3",
               "index": "src/index.html",
               "browser": "src/main.ts",
               "polyfills": [
@@ -62,12 +62,15 @@
           },
           "serve": {
             "builder": "@angular-devkit/build-angular:dev-server",
+            "options": {
+              "proxyConfig": "proxy.conf.json"
+            },
             "configurations": {
               "production": {
-                "buildTarget": "mitigation-frontend:build:production"
+                "buildTarget": "Mitigation-App-V3:build:production"
               },
               "development": {
-                "buildTarget": "mitigation-frontend:build:development"
+                "buildTarget": "Mitigation-App-V3:build:development"
               }
             },
             "defaultConfiguration": "development"
@@ -90,7 +93,8 @@
                 }
               ],
               "styles": [
-                "src/styles.css"
+                "src/styles.css",
+                "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               ],
               "scripts": []
             }

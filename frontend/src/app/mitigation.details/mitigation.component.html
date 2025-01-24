@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="header" *ngIf="!showForm">
+      <h2>Mitigation Details</h2>
+      <button class="create-btn"(click)="openForm()">Create</button>
+      </div>
+      <div *ngIf="!showForm">
+        <table>
+            <tr>
+              <th><input type = "checkbox"></th>
+              <th>#Mitigation</th>
+              <th>Description</th>
+              <th>Pre-Mitigation Score</th>
+              <th>Post-Mitigation Score</th>
+              <th>Applied On</th>
+            </tr>
+            <tr *ngFor="let mitigation of mitigations">
+              <td>{{ mitigation.description }}</td>
+              <td>{{ mitigation.preMitigationScore }}</td>
+              <td>{{ mitigation.postMitigationScore }}</td>
+              <td>{{ mitigation.appliedOn }}</td>
+            <td>
+              <input type="checkbox" [(ngModel)]="mitigation.checked">
+              <button *ngIf="mitigation.checked" (click)="deleteMitigation(mitigation.id)">X</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div *ngIf="showForm">
+        <app-create-mitigation-dialog (onSubmit)="submitMitigation($event)"></app-create-mitigation-dialog>
+      </div>
+</div>

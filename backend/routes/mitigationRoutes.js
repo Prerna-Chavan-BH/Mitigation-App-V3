@@ -3,8 +3,8 @@ const { getAllMitigations, createMitigations, deleteMitigation } = require('../c
 
 const router = express.Router();
 
-router.get('/getmitigation', getAllMitigations);
-router.post('/createmitigation', createMitigations);
-router.delete('/deletemitigation', deleteMitigation);
+router.get('/api/mitigations', getAllMitigations);
+router.post('/api/mitigations', createMitigations);
+router.delete('/api/mitigations/:id', deleteMitigation);
 
 module.exports = router;
