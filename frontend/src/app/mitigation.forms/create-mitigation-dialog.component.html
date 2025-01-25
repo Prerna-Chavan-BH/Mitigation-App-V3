@@ -1,17 +1,26 @@
 <div class="dialog-container">
   <h2 class="center">Create Mitigation</h2>
-    <form [formGroup]="mitigationForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="mitigationForm" (ngSubmit)="onSubmit($event)">
       <div class="form-group">
         <label>Description</label>
-        <textarea name= "description" ngModel required [(ngModel)]="newMitigation.description" style="width: 755px; height: 35px;"></textarea>
+        <!-- <textarea name= "description" ngModel required [(ngModel)]="newMitigation.description" style="width: 755px; height: 35px;"></textarea> -->
+         <input formControlName="description" type="text" value="{{mitigation?.description}}">
       </div>
 
     <br>
 
     <div class="form-group">
       <label>Pre-Mitigation Score</label>
-      <select name= "preMitigationScore" ngModel required  [(ngModel)]="newMitigation.preMitigationScore" [disabled]="!newMitigation.description">
+      <!-- <select name= "preMitigationScore" ngModel required  [(ngModel)]="newMitigation.preMitigationScore" [disabled]="!newMitigation.description">
         <option *ngFor="let score of scores">{{ score }}</option>
+      </select> -->
+      <!-- <input formControlName="preMitigationScore" type="number"> -->
+      <select formControlName="preMitigationScore" [disabled]="!mitigationForm.get('description')?.value">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
       </select>
     </div>
 
@@ -19,19 +28,30 @@
 
     <div class="form-group">
       <label>Post-Mitigation Score</label>
-      <select  name= "postMitigationScore" ngModel required [(ngModel)]="newMitigation.postMitigationScore" [disabled]="!newMitigation.preMitigationScore">
+      <!-- <select  name= "postMitigationScore" ngModel required [(ngModel)]="newMitigation.postMitigationScore" [disabled]="!newMitigation.preMitigationScore">
         <option *ngFor="let score of scores">{{ score }}</option>
+      </select> -->
+      <!-- <input formControlName="postMitigationScore" type="number"> -->
+      <select formControlName="postMitigationScore" [disabled]="!mitigationForm.get('preMitigationScore')?.value">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
       </select>
     </div>
 
     <br>
 
     <div class="form-group">
-      <label>AppliedOn: </label>
-      <input type="datetime-local" name= "appliedOn" ngModel required [(ngModel)]="newMitigation.appliedOn" [disabled]="!newMitigation.postMitigationScore">
+      <label>AppliedOn:</label>
+      <!-- <input type="datetime-local" name= "appliedOn" ngModel required [(ngModel)]="newMitigation.appliedOn" [disabled]="!newMitigation.postMitigationScore"> -->
+      <input formControlName="appliedOn" type="datetime-local" [disabled]="!mitigationForm.get('postMitigationSCore')?.value">
     </div>
+
     <br>
-    <button type="submit">Submit</button>
+
+    <button type="submit" [disabled]="!mitigationForm.valid">Submit</button>
 
     <div *ngIf="error">
       {{error}}

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { MitigationComponent } from './mitigation.details/mitigation.component';
+import { Mitigation } from './mitigation.details/mitigation.component';
 @Injectable({
     providedIn: 'root'
 })
@@ -9,14 +10,14 @@ import { Observable } from 'rxjs';
 export class MitigationService{
     public apiUrl = 'http://localhost:3000/api/mitigations';
 
-    constructor(public http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
     getMitigations(): Observable <any> {
-        return this.http.get(this.apiUrl);
+        return this.http.get<Mitigation[]>(this.apiUrl);
     }
 
     createMitigations(mitigation: any): Observable <any> {
-        return this.http.post(this.apiUrl, mitigation);
+        return this.http.post<Mitigation[]>(this.apiUrl, mitigation);
     }
 
     deleteMitigations(id: number): Observable <any> {

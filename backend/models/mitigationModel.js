@@ -20,10 +20,18 @@ const Mitigation = sequelize.define('Mitigation',{
     pre_mitigation_score: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+            min: 1,
+            max: 5
+        }
     },
     post_mitigation_score: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+            min: 1,
+            max: 5
+        }
     },
     applied_on: {
         type: DataTypes.DATE,

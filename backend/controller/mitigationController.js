@@ -6,7 +6,7 @@ exports.getAllMitigations = async(req, res) => {
         const mitigations = await Mitigation.findAll();
         res.json(mitigations);
     }catch(error){
-        res.status(500).json({ message: "Error getting the mitigations" ,error});
+        res.status(500).json({ message: "Error getting the mitigations" ,error });
     }
 };
 
@@ -37,6 +37,7 @@ exports.deleteMitigation = async(req, res) => {
         await Mitigation.destroy({where: {id}});
         res.json({message: 'Mitigation destroyed successfully'});
     }catch(error){
-        res.status(500).json({ message: error.message});
+        res.status(500).json({ message: error.message });
     }
 };
+

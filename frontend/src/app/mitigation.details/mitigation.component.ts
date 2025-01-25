@@ -7,7 +7,7 @@ import { FormsModule } from "@angular/forms";
 import { CreateMitigationDialogComponent } from "../mitigation.forms/create-mitigation-dialog.component";
 
 
-interface Mitigation {
+export interface Mitigation {
   id: number;
   description: string;
   preMitigationScore: number;
@@ -27,6 +27,7 @@ export class MitigationComponent implements OnInit{
   mitigations: Mitigation[] = [];
   showForm = false;
   scores = [ 1, 2, 3, 4, 5];
+  error: string | undefined;
   newMitigation: Mitigation = {
     id: 0,
     description: '',

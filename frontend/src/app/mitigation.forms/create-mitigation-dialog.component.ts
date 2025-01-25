@@ -1,10 +1,14 @@
-import { Component, Inject, OnInit, EventEmitter, Output, ViewChild} from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, Output, ViewChild, enableProdMode} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { response } from 'express';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgForm } from '@angular/forms';
 // import { MitigationComponent } from './mitigation.details/mitigation.component.ts';
+import { MitigationService } from '../mitigation.service.js';
+import { Mitigation } from '../mitigation.details/mitigation.component.js';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-create-mitigation-dialog',
@@ -14,11 +18,11 @@ import { NgForm } from '@angular/forms';
 })
 
 export class CreateMitigationDialogComponent implements OnInit{
-  @Output() onSubmit = new EventEmitter();
-  @ViewChild('mitigationForm') mitigationForm: NgForm | undefined;
-  // @ViewChild('mitigationForm', {static: true}) mitigationForm: NgForm;
+  mitigation?: Mitigation;
   newMitigation= { description: '', preMitigationScore: '', postMitigationScore: '', appliedOn: ''};
   scores = [1, 2, 3, 4, 5];
+  mitigationForm: FormGroup = new FormGroup({});
+  error : string | undefined;
 
 
   // newMitigation = {
@@ -27,43 +31,51 @@ export class CreateMitigationDialogComponent implements OnInit{
   //   postMitigationScore: '',
   //   appliedOn: '',
   // };
-  error: string | undefined;
   
-  constructor(private http: HttpClient){}
+  constructor(private formBuilder: FormBuilder,
+              private mitigationService: MitigationService,
+              private httpClient: HttpClient,
+              public dialog:  MatDialog){}
 
   ngOnInit(): void {
+    this.mitigationForm = new FormGroup({
+      description: new FormControl('', Validators.required),
+      preMitigationScore: new FormControl('', Validators.required),
+      postMitigationScore: new FormControl('', Validators.required),
+      appliedOn: new FormControl('', Validators.required),
+    })
     console.log('MitigationForm rendered!')
   }
 
-  //Submit the form and close the dialoge box
-  submitMitigation(): void {
-    this.http.post('http://localhost:3000/api/mitigations', this.newMitigation)
-    .subscribe((response) => {
-      console.log(response);
-      this.newMitigation = { description: '', preMitigationScore: '', postMitigationScore: '', appliedOn: ''};
-    });
-  }
-
   isValidForm(): boolean {
-    return this.newMitigation.description !== "" &&
-    this.newMitigation.preMitigationScore !== "" &&
-    this.newMitigation.postMitigationScore !== "" &&
-    this.newMitigation.appliedOn !== "";
+    return this.mitigationForm.value;
   }
 
-  submitForm(): void{
+  submitForm(event: Event): void{
+    event.preventDefault();    //prevents the default form submissions
     console.log('submit form called');
-    const mitigation = this.mitigationForm?.value;
-    this.onSubmit.emit(mitigation);
+    if(this.mitigationForm.valid){
+      const mitigation = this.mitigationForm.value;
+      this.onSubmit(mitigation);
+    }
   }
 
-  onSubmit(): void {
-    const mitigation = this.mitigationForm?.value;
-    this.appService.submitMitigation(mitigation).subscribe((response: any) => {
-      console.log(response);
-    },(error: any) => {
-      console.log(error);
-      this.error = error.error.message
-    })
+  // onSubmit(mitigation: any): void {
+  //   this.mitigationService.createMitigations(mitigation).subscribe((response: any) => {
+  //     console.log(response);
+  //   },(error: any) => {
+  //     console.log(error);
+  //     this.error = error.error.message;
+  //   });
+  // }
+
+  onSubmit(f: NgForm) {
+    console.log(f.value)
+    const url = 'http://localhost:3000/api/mitigations';
+    this.httpClient.post(url, f.value)
+      .subscribe((response) => {
+        this.ngOnInit(); //reload the table
+      });
+    this.dialog.closeAll();
   }
 }
