@@ -1,25 +1,16 @@
 const express = require('express');
+const { Sequelize, DataTypes } = require('sequelize');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/db');
 const mitigation_Routes = require('./routes/mitigationRoutes');
+const mitigationController = require('./controller/mitigationController');
 const Mitigation = require('./models/mitigationModel');
-// const morgan = require('morgan');
 
 const app = express();
+
 const PORT = 3000;
 
-// //use morgan to check log request and error
-// app.use(morgan('combined'));
-
-// //using error handler middleware
-// app.use((req, res, err, next) => {
-//     console.error(err.stack);
-//     res.status(500).send('Something broke!');
-// });
-
-app.use(express.static(`${process.cwd()}/build`));
-app.use(express.static(`${process.cwd()}/public`));
 
 app.use(cors({
     origin: 'http://localhost:4200',
@@ -29,15 +20,29 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use((req, res, next) => {
+    console.log("Request body: ", req.body);
+    console.log("Request header: ", req.headers);
+    next();
+})
+//using error handler middleware
+app.use((req, res, err, next) => {
+    console.error(err.stack);
+    res.status(500).send({message: 'Internal server error from bkend', error: err.message});
+});
+
+app.use(express.json());
 
 //MitigationRoutes
-app.use('/', mitigation_Routes);
+app.use('/api', mitigation_Routes);
 
 //Testing database connection
 sequelize
     .authenticate().then(() => {
         console.log('Database connected successfully!');
-        sequelize.sync({force: true});
+        // sequelize.sync({force: true});
     })
     .catch((error) => console.error('Unable to connect with the database', error));
 

@@ -4,12 +4,12 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient, withFetch } from '@angular/common/http';
 import { MitigationComponent } from './mitigation.details/mitigation.component.js';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormField } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,7 +37,7 @@ import { AppComponent } from './app.components/app.component';
     MatDatepickerModule,
     MatSelectModule,
   ],
-  providers: [],
+  providers: [{ provide: HttpClient, useClass: HttpClient, deps:[withFetch]}],  //not valid but still trying
   bootstrap: [ AppComponent ]
 })
 

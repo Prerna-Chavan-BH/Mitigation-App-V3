@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MitigationComponent } from './mitigation.details/mitigation.component';
-import { Mitigation } from './mitigation.details/mitigation.component';
+
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 
-export class MitigationService{
-    public apiUrl = 'http://localhost:3000/api/mitigations';
+export class MitigationService {
+  private apiUrl = 'http://localhost:3000/api/mitigations'; // Adjust the URL as needed
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    getMitigations(): Observable <any> {
-        return this.http.get<Mitigation[]>(this.apiUrl);
-    }
+  // Method to send form data to the backend
+  addMitigation(data: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.apiUrl, data, { headers });
+  }
 
-    createMitigations(mitigation: any): Observable <any> {
-        return this.http.post<Mitigation[]>(this.apiUrl, mitigation);
-    }
-
-    deleteMitigations(id: number): Observable <any> {
-        return this.http.delete(`${this.apiUrl}/${id}`);
-    }
+  // Fetch all mitigation entries
+  getMitigations(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 }

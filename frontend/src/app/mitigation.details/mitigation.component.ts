@@ -8,11 +8,11 @@ import { CreateMitigationDialogComponent } from "../mitigation.forms/create-miti
 
 
 export interface Mitigation {
-  id: number;
+  mitigation: number;
   description: string;
-  preMitigationScore: number;
-  postMitigationScore: number;
-  appliedOn: string;
+  pre_mitigation_score: number;
+  post_mitigation_score: number;
+  applied_on: string;
   checked: boolean;
 }
 
@@ -29,11 +29,11 @@ export class MitigationComponent implements OnInit{
   scores = [ 1, 2, 3, 4, 5];
   error: string | undefined;
   newMitigation: Mitigation = {
-    id: 0,
+    mitigation: 0,
     description: '',
-    preMitigationScore: 0,
-    postMitigationScore: 0,
-    appliedOn: '',
+    pre_mitigation_score: 0,
+    post_mitigation_score: 0,
+    applied_on: '',
     checked: false,
   };
 
@@ -52,7 +52,7 @@ export class MitigationComponent implements OnInit{
   deleteMitigation(id: number): void {
     //add delete logic here
     this.http.delete(`http://localhost:3000/api/mitigations/${id}`).subscribe(() => {
-      this.mitigations = this.mitigations.filter(mitigation => mitigation.id !== id);
+      this.mitigations = this.mitigations.filter(mitigation => mitigation.mitigation !== id);
     });
   }
 
@@ -63,7 +63,7 @@ export class MitigationComponent implements OnInit{
       console.log(response);
       this.ngOnInit();         //call ngOnInit to refresh the list of mitigations
     }, (error: any) => {
-      console.error("Error sunmitting the mitigation",error);
+      console.error("Error submitting the mitigation",error);
       this.error = error.error.message;
     });
   }
