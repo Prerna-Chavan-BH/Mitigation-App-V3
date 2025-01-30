@@ -34,8 +34,9 @@ export class CreateMitigationDialogComponent implements OnInit {
         (response) => {
           // Add the new data to the tableData array for UI display
           this.tableData.push(response);
-          // // Reset the form
-          // this.mitigationForm.reset();
+          // Reset the form
+          this.mitigationForm.reset();
+          window.location.reload();
         },
         (error) => {
           console.error('Error submitting form:', error);

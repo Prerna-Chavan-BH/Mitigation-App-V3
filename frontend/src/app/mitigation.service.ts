@@ -21,4 +21,9 @@ export class MitigationService {
   getMitigations(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  //Delete mitigation
+  deleteMitigation(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

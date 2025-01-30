@@ -14,23 +14,67 @@
               <th>Applied On</th>
             </tr>
             <tr *ngFor="let mitigation of mitigations">
-              <!-- <td>{{ mitigations.mitigation }}</td> -->
               <td>
                 <input type="checkbox" [(ngModel)]="mitigation.checked">
               </td>
-               <td>
-                {{mitigation.mitigation}}
-                <button *ngIf="mitigation.checked" (click)="deleteMitigation(mitigation.mitigation)">X</button>
+              <td>
+                {{ mitigation.mitigationId}}
+                <button *ngIf="mitigation.checked" (click)="deleteMitigation(mitigation.mitigationId)">X</button>
               </td>
-              <td>{{ mitigation.description }}</td>
-              <td>{{ mitigation.pre_mitigation_score }}</td>
-              <td>{{ mitigation.post_mitigation_score }}</td>
+              <td>
+                <ng-container *ngIf="!mitigation.checked; else editDescription">
+                  {{ mitigation.description }}
+                </ng-container>
+                <ng-template #editDescription>
+                  <input type="text" [(ngModel)]="mitigation.description">
+                </ng-template>
+              </td>
+              <td>
+                <ng-container *ngIf="!mitigation.checked; else editPreMitigationScore">
+                  {{ mitigation.pre_mitigation_score }}
+                </ng-container>
+                <ng-template #editPreMitigationScore>
+                  <select [(ngModel)]="mitigation.pre_mitigation_score">
+                    <option *ngFor="let score of scores" [value]="score">{{ score }}</option>
+                  </select>
+                </ng-template>
+              </td>
+              <td>
+                <ng-container *ngIf="!mitigation.checked; else editPostMitigationScore">
+                  {{ mitigation.post_mitigation_score }}
+                </ng-container>
+                <ng-template #editPostMitigationScore>
+                  <select [(ngModel)]="mitigation.post_mitigation_score">
+                    <option *ngFor="let score of scores" [value]="score">{{ score }}</option>
+                  </select>
+                </ng-template>
+              </td>
               <td>{{ mitigation.applied_on }}</td>
+            </tr>
            
-          </tr>
         </table>
+
+        <tfoot>
+          <tr>
+            <td colspan="6" style="border: none; padding: 0;">
+              <br><br>
+              <span style="color: rgb(0, 8, 0);">Average Mitigation Score: </span>
+              <span style="font-weight: bold; color: black;">{{calculateAverageMitigationScore() | number: '1.2-2'}}</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <span style="color: rgb(3, 184, 154);">Average Pre-Mitigation Score: </span>
+              <span style="font-weight: bold; color: black;">{{calculateAveragePreMitigationScore() | number: '1.2-2'}}</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <span style="color: rgb(3, 184, 154);">Average Post-Mitigation Score: </span>
+              <span style="font-weight: bold; color: black;">{{calculateAveragePostMitigationScore() | number: '1.2-2'}}</span>
+            </td>
+          </tr>
+        </tfoot>
+
       </div>
       <div *ngIf="showForm">
         <app-create-mitigation-dialog (onSubmit)="submitMitigation($event)"></app-create-mitigation-dialog>
       </div>
+
+      
+      
 </div>

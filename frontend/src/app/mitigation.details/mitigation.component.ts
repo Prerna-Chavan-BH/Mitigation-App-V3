@@ -8,7 +8,7 @@ import { CreateMitigationDialogComponent } from "../mitigation.forms/create-miti
 
 
 export interface Mitigation {
-  mitigation: number;
+  mitigationId: number;
   description: string;
   pre_mitigation_score: number;
   post_mitigation_score: number;
@@ -29,7 +29,7 @@ export class MitigationComponent implements OnInit{
   scores = [ 1, 2, 3, 4, 5];
   error: string | undefined;
   newMitigation: Mitigation = {
-    mitigation: 0,
+    mitigationId: 0,
     description: '',
     pre_mitigation_score: 0,
     post_mitigation_score: 0,
@@ -49,22 +49,50 @@ export class MitigationComponent implements OnInit{
     this.showForm = true;
   }
 
-  deleteMitigation(id: number): void {
-    //add delete logic here
-    this.http.delete(`http://localhost:3000/api/mitigations/${id}`).subscribe(() => {
-      this.mitigations = this.mitigations.filter(mitigation => mitigation.mitigation !== id);
-    });
+  deleteMitigation(mitigationId: number): void {
+    console.log(`Deleting mitigation with ID ${mitigationId}`);
+    const url = `http://localhost:3000/api/mitigations/${mitigationId}`;
+    console.log(`Delete URL: ${url}`);
+    this.http.delete(url)
+      .subscribe(
+        (response) => {
+          console.log(`Delete successful: ${response}`);
+          this.mitigations = this.mitigations.filter(mitigation => mitigation.mitigationId !== mitigationId);
+        },
+        (error) => {
+          console.error(`Error deleting mitigation: ${error}`);
+          alert(`Error deleting the mitigation: ${error}`);
+        }
+      );
   }
+  
 
   submitMitigation(newMitigation: any): void{
     console.log('Submit mitigation called');
     this.http.post('http://localhost:3000/api/mitigations', newMitigation)
     .subscribe((response: any) => {
       console.log(response);
+      // alert(`Mitigation submitted successfully!`);
       this.ngOnInit();         //call ngOnInit to refresh the list of mitigations
     }, (error: any) => {
       console.error("Error submitting the mitigation",error);
       this.error = error.error.message;
+      alert(`Error submitting the mitigation!`);
     });
+  }
+
+  calculateAverageMitigationScore(): number{
+    const totalScore = this.mitigations.reduce((acc, mitigation) => acc + mitigation.pre_mitigation_score + mitigation.post_mitigation_score, 0);
+    return totalScore / (this.mitigations.length);
+  }
+
+  calculateAveragePreMitigationScore(): number {
+    const totalScore = this.mitigations.reduce((acc, mitigation) => acc + mitigation.pre_mitigation_score, 0);
+    return totalScore / (this.mitigations.length);
+  }
+
+  calculateAveragePostMitigationScore(): number {
+    const totalScore = this.mitigations.reduce((acc, mitigation) => acc + mitigation.post_mitigation_score, 0);
+    return totalScore / (this.mitigations.length);
   }
 }

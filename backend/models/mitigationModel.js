@@ -1,4 +1,3 @@
-
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const Sequelize = require('sequelize');
@@ -9,7 +8,7 @@ const Mitigation = sequelize.define('Mitigation',{
     //     autoIncrement: true,
     //     primaryKey: true,
     // },
-    mitigation: {
+    mitigationId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,

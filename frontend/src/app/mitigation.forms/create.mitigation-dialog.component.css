@@ -4,10 +4,13 @@ form{
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0,0,0,0,1);
+    font-family: sans-serif;
+
 }
 
 .center{
     text-align: center;
+    font-family: sans-serif;
 }
 
 label{
@@ -24,16 +27,18 @@ input[type = "text"], select{
 }
 
 button[type="submit"]{
-    background-color: #4CAF50;
+    background-color: rgb(3, 184, 154);
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-family: sans-serif;
 }
 
 button[type="submit"]:hover{
-    background-color: #3e8e41;
+    background-color: rgb(3, 184, 154);
+    font-family: sans-serif;
 }
 
 .disabled-form {

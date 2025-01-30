@@ -30,10 +30,10 @@ exports.createMitigations = async(req, res) => {
   };
   // Delete mitigation
   exports.deleteMitigation = async (req, res) => {
-    const { id } = req.params;
+    const { mitigationId } = req.params;
   
     try {
-      const mitigation = await Mitigation.destroy({ where: { id } });
+      const mitigation = await Mitigation.destroy({ where: { mitigationId } });
       if (mitigation === 0) {
         res.status(404).json({ message: 'Mitigation not found' });
       } else {
