@@ -37,6 +37,7 @@ export class CreateMitigationDialogComponent implements OnInit {
           // Reset the form
           this.mitigationForm.reset();
           window.location.reload();
+          alert('Mitigation created successfully:)')
         },
         (error) => {
           console.error('Error submitting form:', error);

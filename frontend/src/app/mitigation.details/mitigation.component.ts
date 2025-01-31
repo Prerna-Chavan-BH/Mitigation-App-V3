@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { response } from "express";
 import { FormsModule } from "@angular/forms";
 import { CreateMitigationDialogComponent } from "../mitigation.forms/create-mitigation-dialog.component";
-
+import { IdGeneratorService } from '../mitigation-Idgenerator.service';
 
 export interface Mitigation {
   mitigationId: number;
@@ -58,6 +58,7 @@ export class MitigationComponent implements OnInit{
         (response) => {
           console.log(`Delete successful: ${response}`);
           this.mitigations = this.mitigations.filter(mitigation => mitigation.mitigationId !== mitigationId);
+          alert('Mitigation deleted successfully!');
         },
         (error) => {
           console.error(`Error deleting mitigation: ${error}`);
@@ -72,6 +73,7 @@ export class MitigationComponent implements OnInit{
     this.http.post('http://localhost:3000/api/mitigations', newMitigation)
     .subscribe((response: any) => {
       console.log(response);
+      alert('Mitigation created successfully!');
       // alert(`Mitigation submitted successfully!`);
       this.ngOnInit();         //call ngOnInit to refresh the list of mitigations
     }, (error: any) => {

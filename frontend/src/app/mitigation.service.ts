@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { IdGeneratorService } from './mitigation-Idgenerator.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,12 +10,14 @@ import { Observable } from 'rxjs';
 export class MitigationService {
   private apiUrl = 'http://localhost:3000/api/mitigations'; // Adjust the URL as needed
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private idGeneratorService: IdGeneratorService) {}
 
   // Method to send form data to the backend
-  addMitigation(data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.apiUrl, data, { headers });
+  addMitigation(mitigation: any): Observable<any> {
+    // console.log('Generating id');
+    // mitigation.mitigationId = this.idGeneratorService.getNextId();
+    // console.log('Generated the id: ', mitigation.mitigationId);
+    return this.http.post(this.apiUrl, mitigation);
   }
 
   // Fetch all mitigation entries
