@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { response } from "express";
 import { FormsModule } from "@angular/forms";
 import { CreateMitigationDialogComponent } from "../mitigation.forms/create-mitigation-dialog.component";
-import { IdGeneratorService } from '../mitigation-Idgenerator.service';
+import { IdGeneratorService } from '../../service/mitigation-Idgenerator.service';
 
 export interface Mitigation {
   mitigationId: number;
@@ -28,6 +28,8 @@ export class MitigationComponent implements OnInit{
   showForm = false;
   scores = [ 1, 2, 3, 4, 5];
   error: string | undefined;
+  serverDown = false;
+
   newMitigation: Mitigation = {
     mitigationId: 0,
     description: '',
@@ -40,8 +42,18 @@ export class MitigationComponent implements OnInit{
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    // this.http.get('http://localhost:3000/api/mitigations').subscribe((response: any) => {
+    //   this.mitigations = response;
+    // });
+    this.checkServerStatus();
+    this.loadMitigations();
+  }
+
+  loadMitigations(): void{
     this.http.get('http://localhost:3000/api/mitigations').subscribe((response: any) => {
       this.mitigations = response;
+    }, (error: any) => {
+      console.error('Error loading the mitigations: ', error);
     });
   }
 
@@ -69,13 +81,14 @@ export class MitigationComponent implements OnInit{
   
 
   submitMitigation(newMitigation: any): void{
-    console.log('Submit mitigation called');
+    // console.log('Submit mitigation called');
     this.http.post('http://localhost:3000/api/mitigations', newMitigation)
     .subscribe((response: any) => {
       console.log(response);
       alert('Mitigation created successfully!');
       // alert(`Mitigation submitted successfully!`);
       this.ngOnInit();         //call ngOnInit to refresh the list of mitigations
+      this.showForm = false;
     }, (error: any) => {
       console.error("Error submitting the mitigation",error);
       this.error = error.error.message;
@@ -96,5 +109,14 @@ export class MitigationComponent implements OnInit{
   calculateAveragePostMitigationScore(): number {
     const totalScore = this.mitigations.reduce((acc, mitigation) => acc + mitigation.post_mitigation_score, 0);
     return totalScore / (this.mitigations.length);
+  }
+
+  checkServerStatus(): void {
+    this.http.get('http://localhost:3000/api/mitigations').subscribe((response: any) => {
+      console.log('Server is up!');
+    }, (error: any) => {
+      console.error('Server is down!');
+      this.serverDown = true;
+    });
   }
 }

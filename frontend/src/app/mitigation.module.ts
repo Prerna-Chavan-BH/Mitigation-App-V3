@@ -18,6 +18,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { DateAdapter } from '@angular/material/core';
 import { CreateMitigationDialogComponent } from './mitigation.forms/create-mitigation-dialog.component';
 import { AppComponent } from './app.components/app.component';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [ MitigationComponent, CreateMitigationDialogComponent, AppComponent ],
@@ -36,6 +38,7 @@ import { AppComponent } from './app.components/app.component';
     HttpClientModule,
     MatDatepickerModule,
     MatSelectModule,
+    RouterModule,
   ],
   providers: [{ provide: HttpClient, useClass: HttpClient, deps:[withFetch]}],  //not valid but still trying
   bootstrap: [ AppComponent ]

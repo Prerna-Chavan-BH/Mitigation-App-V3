@@ -29,4 +29,10 @@ export class MitigationService {
   deleteMitigation(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  // //updateMitigations
+  // updateMitigation(mitigation: Mitigation): Observable<any> {
+  //   mitigation.calculateAverages();
+  //   return this.http.put(`${this.apiUrl}/mitigations/$`)
+  // }
 }

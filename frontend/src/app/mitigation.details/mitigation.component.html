@@ -1,9 +1,18 @@
-<div class="container">
-  <div class="header" *ngIf="!showForm">
-      <h2>Mitigation Details</h2>
-      <button class="create-btn"(click)="openForm()">Create</button>
-      </div>
-      <div *ngIf="!showForm">
+<div *ngIf="serverDown" style=" position: fixed; text-align: center; margin-top: 20px; top: 0; left: 0; width: 100%;">
+  <p style="font-weight: bold; color:  red; font-size: large;">Server is down! Please check the backend connection!</p>
+</div>
+
+<div class="main-container" [ngClass]="{'shift-left':showForm}">
+  <div *ngIf="!serverDown">
+    <div class="header" *ngIf="!showForm">
+        <h2>Mitigation Details</h2>
+        <button class="create-btn"(click)="openForm()">Create</button>
+    </div>
+
+  
+    
+    <div class="table-container">
+      
         <table>
             <tr>
               <th><input type = "checkbox"></th>
@@ -71,10 +80,15 @@
         </tfoot>
 
       </div>
-      <div *ngIf="showForm">
+      <!-- <div *ngIf="showForm">
+        <app-create-mitigation-dialog (onSubmit)="submitMitigation($event)"></app-create-mitigation-dialog>
+      </div> -->
+
+       <!-- adding the form the table ui -->
+      <div class="form-container" *ngIf="showForm">
         <app-create-mitigation-dialog (onSubmit)="submitMitigation($event)"></app-create-mitigation-dialog>
       </div>
 
-      
+    </div>
       
 </div>
