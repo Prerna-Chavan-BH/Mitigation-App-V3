@@ -19,6 +19,8 @@ import { DateAdapter } from '@angular/material/core';
 import { CreateMitigationDialogComponent } from './mitigation.forms/create-mitigation-dialog.component';
 import { AppComponent } from './app.components/app.component';
 import { RouterModule } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MitigationService } from '../service/mitigation.service.js';
 
 
 @NgModule({
@@ -26,7 +28,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     NgModule,
     MatTableModule,
-    // BrowserAnimationsModule,
+    NgxPaginationModule,
     BrowserModule,
     MatCheckboxModule,
     MatDialogModule,
@@ -39,6 +41,7 @@ import { RouterModule } from '@angular/router';
     MatDatepickerModule,
     MatSelectModule,
     RouterModule,
+    MitigationService,
   ],
   providers: [{ provide: HttpClient, useClass: HttpClient, deps:[withFetch]}],  //not valid but still trying
   bootstrap: [ AppComponent ]

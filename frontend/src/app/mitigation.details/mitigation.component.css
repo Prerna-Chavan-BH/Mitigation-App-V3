@@ -37,12 +37,21 @@
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(132, 130, 130, 0.1);
+    box-shadow: 0 0 10px rgba(130, 132, 132, 0.1);
     transition: opacity 0.5s;
 }
 
 .form-container.ng-hide{
     opacity: 0;
+}
+
+.pagination-controls{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    /* background-color: #3e8183; */
+    border-color: #808080;
+    font-family: sans-serif;
 }
 
 .header{

@@ -22,7 +22,7 @@
               <th>Post-Mitigation Score</th>
               <th>Applied On</th>
             </tr>
-            <tr *ngFor="let mitigation of mitigations">
+            <tr *ngFor="let mitigation of mitigations | paginate: { itemsPerPage: 10, currentPage: p}">
               <td>
                 <input type="checkbox" [(ngModel)]="mitigation.checked">
               </td>
@@ -79,6 +79,10 @@
           </tr>
         </tfoot>
 
+        <div class="pagination-controls">
+          <br>
+          <pagination-controls (pageChange) = "p = $event" [maxSize] = "10" [directionLinks] = "true" [autoHide] = "true"></pagination-controls>
+        </div>
       </div>
       <!-- <div *ngIf="showForm">
         <app-create-mitigation-dialog (onSubmit)="submitMitigation($event)"></app-create-mitigation-dialog>

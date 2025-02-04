@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 bootstrapApplication(MitigationComponent, {
   providers: [
@@ -24,6 +25,7 @@ bootstrapApplication(MitigationComponent, {
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,  
+        NgxPaginationModule,
     ),
     {provide: CreateMitigationDialogComponent,
       useClass: CreateMitigationDialogComponent

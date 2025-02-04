@@ -21,7 +21,7 @@ exports.createMitigations = async(req, res) => {
   exports.getMitigations = async (req, res) => {
     try {
       const mitigations = await Mitigation.findAll();
-      console.log("get mitigation: ",mitigations);
+      // console.log("get mitigation: ",mitigations);
       res.json(mitigations);
     } catch (error) {
       console.error('Error fetching mitigations:', error);

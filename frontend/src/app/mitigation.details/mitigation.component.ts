@@ -6,6 +6,8 @@ import { response } from "express";
 import { FormsModule } from "@angular/forms";
 import { CreateMitigationDialogComponent } from "../mitigation.forms/create-mitigation-dialog.component";
 import { IdGeneratorService } from '../../service/mitigation-Idgenerator.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MitigationService } from "../../service/mitigation.service";
 
 export interface Mitigation {
   mitigationId: number;
@@ -19,12 +21,13 @@ export interface Mitigation {
 @Component({
   selector: 'app-mitigation-details',
   templateUrl: './mitigation.component.html',
-  imports: [CommonModule, FormsModule, CreateMitigationDialogComponent],
+  imports: [CommonModule, FormsModule, CreateMitigationDialogComponent, NgxPaginationModule],
   styleUrls: ['./mitigation.component.css']
 })
 
 export class MitigationComponent implements OnInit{
   mitigations: Mitigation[] = [];
+  p = 1;
   showForm = false;
   scores = [ 1, 2, 3, 4, 5];
   error: string | undefined;
@@ -39,12 +42,12 @@ export class MitigationComponent implements OnInit{
     checked: false,
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private MitigationService: MitigationService) {}
 
   ngOnInit(): void {
-    // this.http.get('http://localhost:3000/api/mitigations').subscribe((response: any) => {
-    //   this.mitigations = response;
-    // });
+    this.MitigationService.getMitigations().subscribe((response: any) => {
+      this.mitigations = response;
+    });
     this.checkServerStatus();
     this.loadMitigations();
   }
