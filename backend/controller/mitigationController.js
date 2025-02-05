@@ -47,13 +47,13 @@ exports.createMitigations = async(req, res) => {
   
   // Update mitigation
   exports.updateMitigation = async (req, res) => {
-    const { id } = req.params;
+    const { mitigationId } = req.params;
     const { description, pre_mitigation_score, post_mitigation_score } = req.body;
   
     try {
       const mitigation = await Mitigation.update(
         { description, pre_mitigation_score, post_mitigation_score },
-        { where: { id } }
+        { where: { mitigationId } }
       );
   
       if (mitigation[0] === 0) {
