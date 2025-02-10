@@ -1,11 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-// import { CreateMitigationDialogComponent } from "./mitigation.forms/create-mitigation-dialog.component.ts";
+import { Component, OnInit, ChangeDetectorRef, ApplicationRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
-import { response } from "express";
 import { FormsModule } from "@angular/forms";
 import { CreateMitigationDialogComponent } from "../mitigation.forms/create-mitigation-dialog.component";
-import { IdGeneratorService } from '../../service/mitigation-Idgenerator.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MitigationService } from "../../service/mitigation.service";
 
@@ -16,8 +13,13 @@ export interface Mitigation {
   post_mitigation_score: number;
   applied_on: string;
   checked: boolean;
-  actios: boolean;
+  actions: boolean;
   editMode: boolean;
+}
+
+export interface Score{
+  value: number;
+  color: string;
 }
 
 @Component({
@@ -44,28 +46,48 @@ export class MitigationComponent implements OnInit{
     post_mitigation_score: 0,
     applied_on: '',
     checked: false,
-    actios: false,
+    actions: false,
     editMode: false,
   };
 
   constructor(private http: HttpClient, private MitigationService: MitigationService) {}
 
+  getColor(score: number | Score): string{
+    if(typeof score === 'object'){
+      return this.getColor(score.value);
+    }  
+      switch(score) {
+      case 1: return ' #44ce1b';
+      case 2: return ' #bbdb44';  
+      case 3: return ' #f7e379';
+      case 4: return ' #f2a134';  
+      case 5: return ' #e51f1f';
+      default: return 'grey';
+    }
+    
+  }
+
+  updateColor(event: any) {
+    this.newMitigation.pre_mitigation_score = event;
+    this.newMitigation.post_mitigation_score = event;
+  }
+
   ngOnInit(): void {
-    this.MitigationService.getMitigations().subscribe((response: any) => {
-      this.mitigations = response;
-    });
+    // this.MitigationService.getMitigations().subscribe((response: any) => {
+    //   this.mitigations = response;
+    // });
     this.checkServerStatus();
     this.loadMitigations();
   }
 
   loadMitigations(): void{
-    this.http.get('http://localhost:3000/api/mitigations').subscribe((response: any) => {
-      this.mitigations = response;
+    this.MitigationService.getMitigations().subscribe((response: any) => {
+      this.mitigations = response.sort((a: any,b: any) => a.mitigationId - b.mitigationId);
     }, (error: any) => {
-      console.error('Error loading the mitigations: ', error);
+      console.error('Error loading the mitigation: ', error);
     });
   }
-
+ 
   openForm(): void {
     this.showForm = true;
   }
@@ -77,6 +99,7 @@ export class MitigationComponent implements OnInit{
 
   cancelEdit(mitigation: Mitigation): void {
     mitigation.editMode = false;
+    alert('Mitigation cancelled successfully:)')
   }
 
 
@@ -107,6 +130,7 @@ export class MitigationComponent implements OnInit{
       alert('Mitigation created successfully!');
       // alert(`Mitigation submitted successfully!`);
       this.ngOnInit();         //call ngOnInit to refresh the list of mitigations
+      this.loadMitigations();
       this.showForm = false;
     }, (error: any) => {
       console.error("Error submitting the mitigation",error);
@@ -116,6 +140,9 @@ export class MitigationComponent implements OnInit{
   }
 
   saveMitigation(mitigation: any) {
+    mitigation.pre_mitigation_score = mitigation.pre_mitigation_score;
+    mitigation.post_mitigation_score = mitigation.post_mitigation_score;
+
     if (mitigation && mitigation.mitigationId) {
       const updatedMitigation = {
         mitigationId: mitigation.mitigationId,
@@ -128,6 +155,7 @@ export class MitigationComponent implements OnInit{
       this.http.put(`http://localhost:3000/api/mitigations/${mitigation.mitigationId}`, updatedMitigation)
         .subscribe(response => {
           console.log(response);
+          alert('Mitigation saved and updated successfully:)')
           mitigation.editMode = false;
         }, error => {
           console.error(error);
@@ -138,21 +166,31 @@ export class MitigationComponent implements OnInit{
   }
   
 
-  calculateAverageMitigationScore(): number{
-    const totalScore = this.mitigations.reduce((acc, mitigation) => acc + mitigation.pre_mitigation_score + mitigation.post_mitigation_score, 0);
-    return totalScore / (this.mitigations.length);
+  calculateAverageMitigationScore(): number {
+    const totalScore = this.mitigations.reduce((acc, mitigation) => {
+      const preMitigationScore = typeof mitigation.pre_mitigation_score === 'object' ? (mitigation.pre_mitigation_score as Score).value : mitigation.pre_mitigation_score;
+      const postMitigationScore = typeof mitigation.post_mitigation_score === 'object' ? (mitigation.post_mitigation_score as Score).value : mitigation.post_mitigation_score;
+      return acc + preMitigationScore + postMitigationScore;
+    }, 0);
+    return totalScore / (this.mitigations.length * 2);
   }
-
+  
   calculateAveragePreMitigationScore(): number {
-    const totalScore = this.mitigations.reduce((acc, mitigation) => acc + mitigation.pre_mitigation_score, 0);
+    const totalScore = this.mitigations.reduce((acc, mitigation) => {
+      const preMitigationScore = typeof mitigation.pre_mitigation_score === 'object' ? (mitigation.pre_mitigation_score as Score).value : mitigation.pre_mitigation_score;
+      return acc + preMitigationScore;
+    }, 0);
     return totalScore / (this.mitigations.length);
   }
-
+  
   calculateAveragePostMitigationScore(): number {
-    const totalScore = this.mitigations.reduce((acc, mitigation) => acc + mitigation.post_mitigation_score, 0);
+    const totalScore = this.mitigations.reduce((acc, mitigation) => {
+      const postMitigationScore = typeof mitigation.post_mitigation_score === 'object' ? (mitigation.post_mitigation_score as Score).value : mitigation.post_mitigation_score;
+      return acc + postMitigationScore;
+    }, 0);
     return totalScore / (this.mitigations.length);
   }
-
+  
   checkServerStatus(): void {
     this.http.get('http://localhost:3000/api/mitigations').subscribe((response: any) => {
       console.log('Server is up!');

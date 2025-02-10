@@ -13,47 +13,65 @@
     
     <div class="table-container">
       
-        <table>
-            <tr>
-              <th>Mitigation-ID</th>
-              <th>Description</th>
-              <th>Pre-Mitigation Score</th>
-              <th>Post-Mitigation Score</th>
-              <th>Applied On</th>
-              <th>Actions</th>
-            </tr>
-            <tr *ngFor="let mitigation of mitigations">
-              <td>{{ mitigation.mitigationId }}</td>
-              <td>
-                <span *ngIf="!mitigation.editMode">{{ mitigation.description }}</span>
-                <input *ngIf="mitigation.editMode" type="text" [(ngModel)]="mitigation.description">
-              </td>
-              <td>
-                <span *ngIf="!mitigation.editMode">{{ mitigation.pre_mitigation_score }}</span>
-                <input *ngIf="mitigation.editMode" type="number" [(ngModel)]="mitigation.pre_mitigation_score">
-              </td>
-              <td>
-                <span *ngIf="!mitigation.editMode">{{ mitigation.post_mitigation_score }}</span>
-                <input *ngIf="mitigation.editMode" type="number" [(ngModel)]="mitigation.post_mitigation_score">
-              </td>
-              <td>{{ mitigation.applied_on }}</td>
-              <td>
-                <button class="button" *ngIf="!mitigation.editMode" (click)="editMitigation(mitigation, $event)">
-                  <i class="fa fa-pencil" style="font-size: 16px; color: #337ab7;"></i>
-                </button>
-                <button class="button" *ngIf="mitigation.editMode" (click)="saveMitigation(mitigation)">
-                  <i class="fa fa-save" style="font-size: 16px; color: #5cb85c;"></i>
-                </button>
-                <button class="button" *ngIf="mitigation.editMode" (click)="cancelEdit(mitigation)">
-                  <i class="fa fa-times" style="font-size: 16px; color: #d9534f;"></i>
-                </button>
-                <button class="button" (click)="deleteMitigation(mitigation.mitigationId)">
-                  <i class="fa fa-trash" style="font-size: 16px; color: #d9534f;"></i>
-                </button>
-              </td>
-            </tr>
-           
-        </table>
+      <table>
+        <tr>
+          <th>Mitigation-ID</th>
+          <th>Description</th>
+          <th>Pre-Mitigation Score</th>
+          <th>Post-Mitigation Score</th>
+          <th>Applied On</th>
+          <th>Actions</th>
+        </tr>
+
+        <tr *ngFor="let mitigation of mitigations | paginate: { itemsPerPage: 10, currentPage: p}">
+          <td>{{ mitigation.mitigationId }}</td>
+          <td>
+            <span *ngIf="!mitigation.editMode">{{ mitigation.description }}</span>
+            <input *ngIf="mitigation.editMode" type="text" [(ngModel)]="mitigation.description">
+          </td>
+          <td>
+            <span *ngIf="!mitigation.editMode">
+              <div [style.background-color]="getColor(mitigation.pre_mitigation_score)" class="score-circle"></div>
+            </span>
+            <select *ngIf="mitigation.editMode" [(ngModel)]="mitigation.pre_mitigation_score" (ngModelChange)="updateColor($event)">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3 </option>
+              <option value="4">4 </option>
+              <option value="5">5 </option>
+            </select>
+            <div *ngIf="mitigation.editMode" [style.background-color]="getColor(mitigation.pre_mitigation_score)" class="score-circle"></div>
+          </td>
+          <td>
+            <span *ngIf="!mitigation.editMode">
+              <div [style.background-color]="getColor(mitigation.post_mitigation_score)" class="score-circle"></div>
+            </span>
+            <select *ngIf="mitigation.editMode" [(ngModel)]="mitigation.post_mitigation_score" (ngModelChange)="updateColor($event)">
+              <option value="1">1 </option>
+              <option value="2">2 </option>
+              <option value="3">3 </option>
+              <option value="4">4 </option>
+              <option value="5">5 </option>
+            </select>
+            <div *ngIf="mitigation.editMode" [style.background-color]="getColor(mitigation.post_mitigation_score)" class="score-circle"></div>
+          </td>
+          <td>{{ mitigation.applied_on | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+          <td>
+            <button class="button" *ngIf="!mitigation.editMode" (click)="editMitigation(mitigation, $event)">
+              <i class="fa fa-pencil" style="font-size: 16px; color: #337ab7;"></i>
+            </button>
+            <button class="button" *ngIf="mitigation.editMode" (click)="saveMitigation(mitigation)">
+              <i class="fa fa-save" style="font-size: 16px; color: #5cb85c;"></i>
+            </button>
+            <button class="button" *ngIf="mitigation.editMode" (click)="cancelEdit(mitigation)">
+              <i class="fa fa-times" style="font-size: 16px; color: #d9534f;"></i>
+            </button>
+            <button class="button" (click)="deleteMitigation(mitigation.mitigationId)">
+              <i class="fa fa-trash" style="font-size: 16px; color: #d9534f;"></i>
+            </button>
+          </td>
+        </tr>
+      </table>
 
         <tfoot>
           <tr>

@@ -14,6 +14,7 @@ export class CreateMitigationDialogComponent implements OnInit {
   mitigationForm: FormGroup = new FormGroup({});
   tableData: any[] = [];
   error: string | undefined;
+  showForm = true;
 
   constructor(private fb: FormBuilder, private MitigationService: MitigationService) { }
 
@@ -27,8 +28,17 @@ export class CreateMitigationDialogComponent implements OnInit {
     });
   }
 
+  cancelForm(): void {
+      this.showForm = false;
+    }
+
   onSubmit(): void {
     console.log(this.mitigationForm.value);
+    if (this.mitigationForm.get('description')?.value.split('').length > 20){
+      alert('Description cannot exceed 20 words!');
+      return;
+    }
+
     if (this.mitigationForm.valid) {
       this.MitigationService.addMitigation(this.mitigationForm.value).subscribe(
         (response) => {

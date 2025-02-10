@@ -4,13 +4,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/db');
 const mitigation_Routes = require('./routes/mitigationRoutes');
-const mitigationController = require('./controller/mitigationController');
-const Mitigation = require('./models/mitigationModel');
 
 const app = express();
 
 const PORT = 3000;
-
 
 app.use(cors({
     origin: 'http://localhost:4200',
@@ -19,14 +16,18 @@ app.use(cors({
     credentials: true
 }));
 
+//converts the text based json inputs into js-accessible variables under req.body 
 app.use(bodyParser.json());
+//does same thing for the url-encoded requests. extended true= contains obj of nay type instead of just strings 
 app.use(bodyParser.urlencoded({extended: true}));
 
+
 app.use((req, res, next) => {
-    console.log("Request body: ", req.body);
-    console.log("Request header: ", req.headers);
+    // console.log("Request body: ", req.body);
+    // console.log("Request header: ", req.headers);
     next();
 })
+
 //using error handler middleware
 app.use((req, res, err, next) => {
     console.error(err.stack);

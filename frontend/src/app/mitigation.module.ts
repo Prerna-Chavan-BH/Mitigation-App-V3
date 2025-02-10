@@ -14,8 +14,6 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { DateAdapter } from '@angular/material/core';
 import { CreateMitigationDialogComponent } from './mitigation.forms/create-mitigation-dialog.component';
 import { AppComponent } from './app.components/app.component';
 import { RouterModule } from '@angular/router';

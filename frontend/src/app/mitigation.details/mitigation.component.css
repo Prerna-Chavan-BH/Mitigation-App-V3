@@ -27,21 +27,7 @@
     transition: 0.5s;
 }
 
-.form-container{
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    width: 400px;
-    height: 600px;
-    background-color: #f0f0f0;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(130, 132, 132, 0.1);
-    transition: opacity 0.5s;
-}
-
-.form-container.ng-hide{
+.form-container.ng-hide {
     opacity: 0;
 }
 
@@ -63,13 +49,16 @@
 }
 
 .create-btn{
-    background-color: #f8f9fa;
-    color: #000000;
+    background-color: rgb(3, 184, 154);
+    color: #0a0101;
     padding: 10px 20px;
-    border: 2px solid #808080;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
     font-family: sans-serif;
+    justify-content: center;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    display: inline-block;
 }
 
 /* .cancel-btn {
@@ -126,13 +115,9 @@ th {
     margin: 3px;
 }
 
-/* .delete.btn{
-    background-color: #e74c3c;
-    color: #fff;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: sans-serif;
-    margin: 5px;
-} */
+.score-circle{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+}

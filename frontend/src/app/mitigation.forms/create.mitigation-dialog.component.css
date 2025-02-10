@@ -5,7 +5,24 @@ form{
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0,0,0,0,1);
     font-family: sans-serif;
+    box-shadow: 10px 10px 5px hsl(0, 7%, 91%);
+    justify-content: center;
+    /* text-align: center;                  //use this to bring the field names to centre
+    align-items: center; */
+}
 
+.dialog-container{
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 400px;
+    height: 600px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(130, 132, 132, 0.1);
+    transition: opacity 0.5s;
 }
 
 .center{
@@ -18,6 +35,38 @@ label{
     margin-bottom: 10px;
 }
 
+label.required:after {
+    content: "*";
+    color: red;
+}
+
+input[type="text"] {
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+input[type="text"]:focus {
+    /* background-color: #cff;
+    border-color: #66d; */
+    border: 2px solid #34C759;
+}
+
+input[type="text"]:valid {
+    background-color: #dfd;
+    border-color: #66d;
+}
+
+input[type="text"]:invalid {
+    /* background-color: #fdd;
+    border-color: #d66; */
+    border: 2px solid #f00;
+}
+
+input[type="text"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 input[type = "text"], select{
     width: 100%;
     height: 40px;
@@ -28,20 +77,27 @@ input[type = "text"], select{
 
 button[type="submit"]{
     background-color: rgb(3, 184, 154);
-    color: #fff;
+    color: #0a0101;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-family: sans-serif;
+    justify-content: center;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    margin: 0 auto;
+    position: relative;
 }
 
 button[type="submit"]:hover{
     background-color: rgb(3, 184, 154);
     font-family: sans-serif;
+    margin: 0 auto;
+    position: relative;
+    justify-content: center;
 }
 
-.disabled-form {
+/* .disabled-form {
     opacity: 0.5;
     pointer-events: none;
-}
+} */
