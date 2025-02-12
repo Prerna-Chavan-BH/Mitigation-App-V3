@@ -36,7 +36,7 @@ label{
 }
 
 label.required:after {
-    content: "*";
+    content: " *";
     color: red;
 }
 
@@ -46,25 +46,9 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-    /* background-color: #cff;
-    border-color: #66d; */
-    border: 2px solid #34C759;
-}
-
-input[type="text"]:valid {
-    background-color: #dfd;
-    border-color: #66d;
-}
-
-input[type="text"]:invalid {
-    /* background-color: #fdd;
-    border-color: #d66; */
-    border: 2px solid #f00;
-}
-
-input[type="text"]:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+    background-color: #fff;
+    border-color: rgb(5, 109, 78);
+    border: 2px solid rgb(5, 109, 78);
 }
 
 input[type = "text"], select{
@@ -72,7 +56,7 @@ input[type = "text"], select{
     height: 40px;
     margin-bottom: 20px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 2px solid rgb(3, 184, 154);
 }
 
 button[type="submit"]{
@@ -83,10 +67,10 @@ button[type="submit"]{
     border-radius: 5px;
     cursor: pointer;
     font-family: sans-serif;
-    justify-content: center;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     margin: 0 auto;
     position: relative;
+    display: block;
 }
 
 button[type="submit"]:hover{

@@ -1,14 +1,14 @@
-<div *ngIf="showForm" class="dialog-container">
-  <h2 class="center">Create Mitigation Dialog <button class ="cancel-btn" (click)="cancelForm()" style="color: red;">X</button></h2>
+<div *ngIf="showForm" class="dialog-container" >
+  <h2 class="center">Create Mitigation Dialog <button class ="cancel-btn" (click)="cancelForm()"><i class="fa fa-times" style="font-size: 16px; color: #d9534f;"></i></button></h2>
   
     <form [formGroup]="mitigationForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label class="required">description</label>
-         <input type="text" formControlName="description"  style="width: 350px; height: 35px;">
+         <input type="text" formControlName="description"  style="width: 335px; height: 25px;">
       </div>
     <br>
 
-    <div class="form-group">
+    <div class="form-group" >
       <label class="required">pre_mitigation_score</label>
       <select type="text" formControlName="pre_mitigation_score" [disabled]="!mitigationForm.get('description')?.value" required>
         <option value="1">1</option>
@@ -36,7 +36,7 @@
 
     <div class="form-group">
       <label class="required">applied_on </label>
-      <input type="text" formControlName="applied_on" type="datetime-local" [disabled]="!mitigationForm.get('post_mitigation_score')?.value" style="width: 350px; height: 35px;" required>
+      <input type="text" formControlName="applied_on" type="datetime-local" [disabled]="!mitigationForm.get('post_mitigation_score')?.value" style="width: 350px; height: 35px; border: 2px solid rgb(3, 184, 154);" required>
     </div>
 
     <br>

@@ -1,22 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IdGeneratorService } from './mitigation-Idgenerator.service';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class MitigationService {
-  private apiUrl = 'http://localhost:3000/api/mitigations'; // Adjust the URL as needed
+  private apiUrl = 'http://localhost:3000/api/mitigations'; 
 
-  constructor(private http: HttpClient, private idGeneratorService: IdGeneratorService) {}
+  constructor(private http: HttpClient) {}
 
-  // Method to send form data to the backend
+  // Method to send data form frontend to the backend
   addMitigation(mitigation: any): Observable<any> {
-    // console.log('Generating id');
-    // mitigation.mitigationId = this.idGeneratorService.getNextId();
-    // console.log('Generated the id: ', mitigation.mitigationId);
     return this.http.post(this.apiUrl, mitigation);
   }
 

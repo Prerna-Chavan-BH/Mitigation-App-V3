@@ -52,13 +52,14 @@ export class MitigationComponent implements OnInit{
 
   constructor(private http: HttpClient, private MitigationService: MitigationService) {}
 
+  //mapping the range of 1 to 5 with colors
   getColor(score: number | Score): string{
     if(typeof score === 'object'){
       return this.getColor(score.value);
     }  
       switch(score) {
-      case 1: return ' #44ce1b';
-      case 2: return ' #bbdb44';  
+      case 1: return 'rgb(46, 183, 4)';
+      case 2: return 'rgb(143, 218, 46)';  
       case 3: return ' #f7e379';
       case 4: return ' #f2a134';  
       case 5: return ' #e51f1f';
@@ -72,10 +73,8 @@ export class MitigationComponent implements OnInit{
     this.newMitigation.post_mitigation_score = event;
   }
 
+  //initilaising the mitigations
   ngOnInit(): void {
-    // this.MitigationService.getMitigations().subscribe((response: any) => {
-    //   this.mitigations = response;
-    // });
     this.checkServerStatus();
     this.loadMitigations();
   }
@@ -99,14 +98,13 @@ export class MitigationComponent implements OnInit{
 
   cancelEdit(mitigation: Mitigation): void {
     mitigation.editMode = false;
-    alert('Mitigation cancelled successfully:)')
+    alert('Mitigation cancelled successfully:)');
   }
-
 
   deleteMitigation(mitigationId: number): void {
     console.log(`Deleting mitigation with ID ${mitigationId}`);
     const url = `http://localhost:3000/api/mitigations/${mitigationId}`;
-    console.log(`Delete URL: ${url}`);
+    // console.log(`Delete URL: ${url}`);
     this.http.delete(url)
       .subscribe(
         (response) => {
@@ -123,10 +121,9 @@ export class MitigationComponent implements OnInit{
   
 
   submitMitigation(newMitigation: any): void{
-    // console.log('Submit mitigation called');
     this.http.post('http://localhost:3000/api/mitigations', newMitigation)
     .subscribe((response: any) => {
-      console.log(response);
+      // console.log(response);
       alert('Mitigation created successfully!');
       // alert(`Mitigation submitted successfully!`);
       this.ngOnInit();         //call ngOnInit to refresh the list of mitigations
@@ -154,7 +151,7 @@ export class MitigationComponent implements OnInit{
       // Call the API to update the mitigation
       this.http.put(`http://localhost:3000/api/mitigations/${mitigation.mitigationId}`, updatedMitigation)
         .subscribe(response => {
-          console.log(response);
+          // console.log(response);
           alert('Mitigation saved and updated successfully:)')
           mitigation.editMode = false;
         }, error => {

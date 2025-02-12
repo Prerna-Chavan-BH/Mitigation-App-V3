@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
 import { MitigationService } from '../../service/mitigation.service';
 import { CommonModule } from '@angular/common';
+import { MitigationComponent } from '../mitigation.details/mitigation.component';
 
 
 @Component({
